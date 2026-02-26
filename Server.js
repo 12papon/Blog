@@ -1,11 +1,19 @@
 const express = require("express");
 const Database = require("./src/configDB/configDB");
+const router = require("./src/route/router");
 
 const app = express();
+// Database
 Database();
 
-app.get((req, res) => {
-  res.send("Hallo");
+//Routers
+app.use("/api/v1", router);
+
+//Error Handaling
+app.use((err, req, res, next) => {
+  if (err) {
+    res.send("internal server error" + err);
+  }
 });
 
 app.listen(process.env.PORT, () => {
