@@ -4,5 +4,6 @@ const routsUtils = require("../utils/routsUtils");
 const router = express.Router();
 
 router.get("/m1", routsUtils.getData);
+router.post("/p1", routsUtils.postData);
 
 module.exports = router;
