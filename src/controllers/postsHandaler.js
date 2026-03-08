@@ -1,10 +1,18 @@
 const Posts = require("../models/posts");
 const postsHandaler = async (req, res, next) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, username, email } = req.body;
+    const auth = {
+      name: username,
+      email: email,
+    };
     const image = req.file.path;
-    console.log(title, image, content);
-    const newPost = new Posts({ image, title, content });
+    const newPost = new Posts({
+      image,
+      title,
+      content,
+      auth,
+    });
     await newPost.save();
 
     res.json({

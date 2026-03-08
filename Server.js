@@ -2,6 +2,7 @@ const express = require("express");
 const Database = require("./src/configDB/configDB");
 const cors = require("cors");
 const router = require("./src/route/router");
+const path = require("path");
 
 const app = express();
 //cors setup
@@ -31,6 +32,7 @@ Database();
 //cors
 app.use(cors(corsOptions));
 //Routers
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/blog", router);
 
 //Error Handaling
