@@ -28,13 +28,27 @@ const corsOptions = {
 };
 // Database
 Database();
-
+app.use(express.json());
 //cors
-app.use(cors(corsOptions));
+app.use(cors());
 //Routers
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/blog", router);
+const distPath = path.join(__dirname, "..", "App", "dist");
+console.log(distPath);
 
+app.use(express.static(distPath));
+app.get("/*splat", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "App", "dist", "index.html"),
+    (err) => {
+      if (err) {
+        console.error("Error sending index.html:", err);
+        res.status(500).send(err);
+      }
+    },
+  );
+});
 //Error Handaling
 app.use((err, req, res, next) => {
   if (err) {
